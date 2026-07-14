@@ -16,13 +16,13 @@
 	</header>
 	<main>
 		<div id="calculation-field" class="container-xl w-10/12 mx-auto my-10">
-			<div class="mt-10">
+			<div id="height-field" class="mt-10">
 				<label for="bmi-height" class="block">Height</label>
 				<div class="flex items-center mt-3 gap-1">
 					<input id="bmi-height" type="text" name="height" class="inline-block border border-black rounded-xs"><span class="inline-block">cm</span>
 				</div>
 			</div>
-			<div class="mt-10">
+			<div id="weight-field" class="mt-10">
 				<label for="bmi-height" class="block">Weight</label>
 				<div class="flex items-center mt-3 gap-1">
 					<input id="bmi-weight" type="text" name="height" class="inline-block border border-black rounded-xs"><span class="inline-block">kg</span>
@@ -37,6 +37,79 @@
 			<small>&copy; 2026 JS Collection. All rights reserved.</small>
 		</div>
 	</footer>
+	<script>
+		'use strict';
+
+		const bmiHeight = document.getElementById('bmi-height');
+		const bmiWeight = document.getElementById('bmi-weight');
+		const heightField = document.getElementById('height-field');
+		const weightField = document.getElementById('weight-field');
+		const calculateBtn = document.getElementById('calculate-btn');
+		const calculationField = document.getElementById('calculation-field');
+
+		calculateBtn.addEventListener('click', () => {
+
+			// Clear previous messages
+			document.querySelectorAll('.error').forEach(msg => msg.remove());
+			document.querySelectorAll('.result').forEach(msg => msg.remove());
+
+			// Get input values
+			const inputHeight = bmiHeight.value;
+			const inputWeight = bmiWeight.value;
+
+			// Input validation
+			if (!inputHeight) {
+				const heightError = document.createElement('p');
+
+				heightError.classList.add(
+					'error',
+					'mt-3',
+					'text-red-600',
+					'text-sm'
+				);
+
+				heightError.textContent = 'Please enter your height.';
+				heightField.append(heightError);
+			}
+
+			if (!inputWeight) {
+				const weightError = document.createElement('p');
+
+				weightError.classList.add(
+					'error',
+					'mt-3',
+					'text-red-600',
+					'text-sm'
+				);
+
+				weightError.textContent = 'Please enter your weight.';
+				weightField.append(weightError);
+			}
+
+			// Stop if validation failed
+			if (!inputHeight || !inputWeight) {
+				return;
+			}
+
+			// Calculate BMI
+			const height = Number(inputHeight) / 100;
+			const weight = Number(inputWeight);
+			const bmi = weight / (height * height);
+
+			// Display result
+			const result = document.createElement('p');
+
+			result.classList.add('result', 'mt-12');
+
+			if (Number.isNaN(bmi)) {
+				result.textContent = 'Failed to calculate. Please try again.';
+			} else {
+				result.textContent = `Your BMI is ${bmi.toFixed(1)}.`;
+			}
+
+			calculationField.append(result);
+		});
+	</script>
 </body>
 
 </html>
