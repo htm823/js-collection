@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Activity Counter - JS Collection</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+	<header class="my-10">
+		<div class="container-xl w-10/12 mx-auto">
+			<h1 class="text-3xl font-bold">Activity Counter</h1>
+		</div>
+	</header>
+	<main>
+		<div class="container-xl w-10/12 mx-auto">
+			<div class="btns flex gap-4">
+				<button class="btn flex flex-col cursor-pointer bg-indigo-200 w-3xs py-4 rounded-sm">
+					<span class="text-2xl mb-1"><i class="fa-solid fa-laptop-code"></i></span>
+					<span>Web Development</span>
+					<span class="mt-4"><span class="count">0</span> / 10</span>
+				</button>
+				<button class="btn flex flex-col cursor-pointer bg-violet-200 w-3xs py-4 rounded-sm">
+					<span class="text-2xl mb-1"><i class="fa-regular fa-pen-to-square"></i></span>
+					<span>Writing</span>
+					<span class="mt-4"><span class="count">0</span> / 10</span>
+				</button>
+				<button class="btn flex flex-col cursor-pointer bg-purple-200 w-3xs py-4 rounded-sm">
+					<span class="text-2xl mb-1"><i class="fa-solid fa-language"></i></span>
+					<span>Lanuguage Learning</span>
+					<span class="mt-4"><span class="count">0</span> / 10</span>
+				</button>
+				<button class="btn flex flex-col cursor-pointer bg-fuchsia-200 w-3xs py-4 rounded-sm">
+					<span class="text-2xl mb-1"><i class="fa-solid fa-dumbbell"></i></span>
+					<span>Muscle Training</span>
+					<span class="mt-4"><span class="count">0</span> / 10</span>
+				</button>
+				<button class="btn flex flex-col cursor-pointer bg-pink-200 w-3xs py-4 rounded-sm">
+					<span class="text-2xl mb-1"><i class="fa-solid fa-person-walking"></i></span>
+					<span>Walking</span>
+					<span class="mt-4"><span class="count">0</span> / 10</span>
+				</button>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="container-xl w-10/12 mx-auto my-10">
+			<small>&copy; 2026 JS Collection. All rights reserved.</small>
+		</div>
+	</footer>
+	<script>
+		'use strict';
+
+		const btns = document.querySelectorAll('.btn');
+
+		btns.forEach((btn) => {
+			btn.addEventListener('click', (e) => {
+				const currentBtn = e.currentTarget;
+				const count = currentBtn.querySelector('.count');
+
+				let currentCount = count.textContent;
+
+				if (currentCount >= 10) return;
+
+				currentCount++;
+
+				count.textContent = currentCount;
+			});
+		});
+
+	</script>
+</body>
+
+</html>
