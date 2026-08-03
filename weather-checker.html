@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>BMI Calculator - JS Collection</title>
+	<title>Weather Checker - JS Collection</title>
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -16,22 +16,16 @@
 	</header>
 	<main>
 		<div id="weather-field" class="container-xl w-10/12 mx-auto my-10">
-			<div class="mt-10">
-				<label for="weather" class="block">Today's Weather</label>
-				<div class="flex py-3 gap-2">
-					<select id="weather" class="inline border border-black rounded-xs p-1">
-						<option value="">Please select the weather.</option>
-						<option value="sunny">☀️</option>
-						<option value="cloudy">☁️</option>
-						<option value="rainy">☔️</option>
-						<option value="stormy">⛈️</option>
-						<option value="snowy">☃️</option>
-					</select>
-					<button id="check-btn" type="button" class="bg-cyan-700 rounded-xs text-white py-1 px-3">Check</button>
-				</div>
-
-			</div>
-
+			<label for="weather" class="block mb-3">Select today's weather.</label>
+			<select id="weather" class="inline border border-black rounded-xs p-1 mb-6 cursor-pointer">
+				<option value=""></option>
+				<option value="sunny">☀️</option>
+				<option value="cloudy">☁️</option>
+				<option value="rainy">☔️</option>
+				<option value="stormy">⛈️</option>
+				<option value="snowy">☃️</option>
+			</select>
+			<!-- Display some messages here -->
 		</div>
 	</main>
 	<footer>
@@ -42,9 +36,8 @@
 	<script>
 		'use strict';
 
-		const weatherSelect = document.getElementById('weather');
-		const checkBtn      = document.getElementById('check-btn');
-		const weatherField  = document.getElementById('weather-field');
+		const selectEl = document.getElementById('weather');
+		const weatherField = document.getElementById('weather-field');
 
 		const msgs = {
 			sunny: "It\'s sunny day. Don\'t forget your sunglasses!",
@@ -52,22 +45,41 @@
 			rainy: "It\'s raining now. Take an umbrella with you.",
 			stormy: "There is a storm outside. Stay indoors and be careful.",
 			snowy: "It\'s snowing today. Wear a warm coat and gloves.",
-			default: "Weather not found. Please try again.",
+			default: "Select today's weather.",
 		}
 
-		checkBtn.addEventListener('click', () => {
-			const weather = weatherSelect.value;
 
-			let msg = msgs[weather] ?? msgs.default;
+		selectEl.addEventListener('change', () => {
+			const weather = selectEl.value ?? '';
 
-			const resultElement       = document.createElement('p');
-			resultElement.textContent = msg;
-			resultElement.classList.add('mt-10', 'result');
+			let msg = weather ? msgs[weather] : msgs.default;
+
+			const resultEl = document.createElement('p');
+			resultEl.textContent = msg;
+			resultEl.classList.add('result');
+
+			switch (weather) {
+				case 'sunny':
+					resultEl.classList.add('text-orange-800');
+					break;
+				case 'cloudy':
+					resultEl.classList.add('text-sky-700');
+					break;
+				case 'rainy':
+					resultEl.classList.add('text-teal-800');
+					break;
+				case 'stormy':
+					resultEl.classList.add('text-olive-600');
+					break;
+				case 'snowy':
+					resultEl.classList.add('text-mauve-500');
+					break;
+			}
 
 			const existingResults = document.querySelectorAll('.result');
 			existingResults.forEach(result => result.remove());
 
-			weatherField.append(resultElement);
+			weatherField.appendChild(resultEl);
 		});
 	</script>
 </body>
