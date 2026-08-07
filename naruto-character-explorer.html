@@ -97,23 +97,55 @@
 		const affiliationSelect = document.getElementById('affiliation');
 		const cards = document.getElementById('cards');
 
-		let displayedCharacters = [];
+		function displayCards(targetCharacters) {
+			let displayedCharacters = [];
 
-		// All characters
-		characters.forEach((character) => {
-			const card = `
+			targetCharacters.forEach((targetCharacter) => {
+				const card = `
 <li class="w-1/4">
 	<ul class="profile">
-		<li>${character.name}</li>
-		<li>${character.affiliation}</li>
+		<li>${targetCharacter.name}</li>
+		<li>${targetCharacter.affiliation}</li>
 	</ul>
-</li>
-			`;
+</li>`;
 
-			displayedCharacters.push(card);
+				displayedCharacters.push(card);
+			});
+
+			cards.innerHTML = displayedCharacters.join('');
+		}
+
+		// All characters
+		displayCards(characters);
+
+		// Filtered by affiliation
+		affiliationSelect.addEventListener('change', () => {
+			const affiliation = affiliationSelect.value;
+
+			if (affiliation === '') {
+				displayCards(characters);
+				return;
+			}
+
+			const results = characters.filter((character) => {
+				switch (affiliation) {
+					case 'konoha':
+						return character.affiliation === 'Konohagakure (Hidden Leaf Village)';
+
+					case 'suna':
+						return character.affiliation === 'Sunagakure (Hidden Sand Village)';
+
+					case 'akatsuki':
+						return character.affiliation === 'Akatsuki';
+
+					default:
+						return false;
+				}
 		});
 
-		cards.innerHTML = displayedCharacters.join('');
+			displayCards(results);
+		});
+
 	</script>
 </body>
 
