@@ -144,52 +144,34 @@
 		// All characters
 		displayCards(characters);
 
-		// Filtered by affiliation
-		affiliationSelect.addEventListener('change', () => {
+		// Filters
+		const filterCharacters = () => {
 			const affiliation = affiliationSelect.value;
-
-			if (affiliation === '') {
-				displayCards(characters);
-				return;
-			}
+			const kekkeiGenkai = kekkeiGenkaiSelect.value;
 
 			const results = characters.filter((character) => {
-				switch (affiliation) {
-					case 'konoha':
-						return character.affiliation === 'Konohagakure (Hidden Leaf Village)';
 
-					case 'suna':
-						return character.affiliation === 'Sunagakure (Hidden Sand Village)';
+				// Affiliation
+				const matchesAffiliation =
+					affiliation === ''
+					|| (affiliation === 'konoha' && character.affiliation === 'Konohagakure (Hidden Leaf Village)')
+					|| (affiliation === 'suna' && character.affiliation === 'Sunagakure (Hidden Sand Village)')
+					|| (affiliation === 'akatsuki' && character.affiliation === 'Akatsuki');
 
-					case 'akatsuki':
-						return character.affiliation === 'Akatsuki';
+				// Kekkei Genkai
+				const matchesKekkeiGenkai =
+					kekkeiGenkai === ''
+					|| (kekkeiGenkai === 'yes') === character.hasKekkeiGenkai
+					|| (kekkeiGenkai === 'no') !== character.hasKekkeiGenkai;
 
-					default:
-						return false;
-				}
+				return matchesAffiliation && matchesKekkeiGenkai;
 			});
 
 			displayCards(results);
-		});
+		}
 
-		kekkeiGenkaiSelect.addEventListener('change', () => {
-			const kekkeiGenkai = kekkeiGenkaiSelect.value;
-
-			if (kekkeiGenkai === '') {
-				displayCards(characters);
-				return;
-			}
-
-			let results = [];
-			if (kekkeiGenkai === 'yes') {
-				results = characters.filter((character) => character.hasKekkeiGenkai === true );
-			} else {
-				results = characters.filter((character) => character.hasKekkeiGenkai === false);
-			}
-
-			displayCards(results);
-		});
-
+		affiliationSelect.addEventListener('change', filterCharacters);
+		kekkeiGenkaiSelect.addEventListener('change', filterCharacters);
 	</script>
 </body>
 
