@@ -16,13 +16,21 @@
 	</header>
 	<main>
 		<div class="container-xl w-10/12 mx-auto">
-			<div class="py-5">
+			<div class="inline-block my-5">
 				<label for="affiliation" class="block mb-2">Affiliation</label>
 				<select id="affiliation" class="inline-block border border-black rounded-xs">
 					<option value="">All affiliations</option>
 					<option value="konoha">Konohagakure (Hidden Leaf Village)</option>
 					<option value="suna">Sunagakure (Hidden Sand Village)</option>
 					<option value="akatsuki">Akatsuki</option>
+				</select>
+			</div>
+			<div class="inline-block my-5 ml-10">
+				<label for="kekkei-genkai" class="block mb-2">Kekkei Genkai</label>
+				<select id="kekkei-genkai" class="inline-block border border-black rounded-xs w-40">
+					<option value="">All</option>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
 				</select>
 			</div>
 			<ul id="cards" class="py-5 flex flex-wrap gap-6">
@@ -43,58 +51,76 @@
 			{
 				name: 'Naruto Uzumaki',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: false,
+			},
+			{
+				name: 'Sasuke Uchiha',
+				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: true,
 			},
 			{
 				name: 'Hinata Hyuga',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: true,
 			},
 			{
 				name: 'Rock Lee',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: false,
 			},
 			{
 				name: 'Neji Hyuga',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: true,
 			},
 			{
 				name: 'Might Guy',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: false,
 			},
 			{
 				name: 'Kakashi Hatake',
 				affiliation: 'Konohagakure (Hidden Leaf Village)',
+				hasKekkeiGenkai: false,
 			},
 
 			// Sunagakure (Hidden Sand Village)
 			{
 				name: 'Gaara',
 				affiliation: 'Sunagakure (Hidden Sand Village)',
+				hasKekkeiGenkai: false,
 			},
 			{
 				name: 'Temari',
 				affiliation: 'Sunagakure (Hidden Sand Village)',
+				hasKekkeiGenkai: false,
 			},
 			{
 				name: 'Kankuro',
 				affiliation: 'Sunagakure (Hidden Sand Village)',
+				hasKekkeiGenkai: false,
 			},
 
 			// Akatsuki
 			{
 				name: 'Itachi Uchiha',
 				affiliation: 'Akatsuki',
+				hasKekkeiGenkai: true,
 			},
 			{
 				name: 'Hidan',
 				affiliation: 'Akatsuki',
+				hasKekkeiGenkai: false,
 			},
 			{
 				name: 'Deidara',
 				affiliation: 'Akatsuki',
+				hasKekkeiGenkai: false,
 			},
 		];
 
 		const affiliationSelect = document.getElementById('affiliation');
+		const kekkeiGenkaiSelect = document.getElementById('kekkei-genkai');
 		const cards = document.getElementById('cards');
 
 		function displayCards(targetCharacters) {
@@ -141,7 +167,25 @@
 					default:
 						return false;
 				}
+			});
+
+			displayCards(results);
 		});
+
+		kekkeiGenkaiSelect.addEventListener('change', () => {
+			const kekkeiGenkai = kekkeiGenkaiSelect.value;
+
+			if (kekkeiGenkai === '') {
+				displayCards(characters);
+				return;
+			}
+
+			let results = [];
+			if (kekkeiGenkai === 'yes') {
+				results = characters.filter((character) => character.hasKekkeiGenkai === true );
+			} else {
+				results = characters.filter((character) => character.hasKekkeiGenkai === false);
+			}
 
 			displayCards(results);
 		});
