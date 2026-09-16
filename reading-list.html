@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reading List - JS Collection</title>
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+	<header class="my-10">
+		<div class="container-xl w-10/12 mx-auto">
+			<h1 class="text-3xl font-bold">Reading List</h1>
+		</div>
+	</header>
+	<main>
+		<div class="container-xl w-10/12 mx-auto my-10">
+			<ul id="reading-list">
+				<!-- Read books -->
+			</ul>
+		</div>
+	</main>
+	<footer>
+		<div class="container-xl w-10/12 mx-auto my-10">
+			<small>&copy; 2026 JS Collection. All rights reserved.</small>
+		</div>
+	</footer>
+	<script>
+		'use strict';
+
+		const books = [
+			{ id: 1, title: 'Harry Potter', author: 'J. K. Rolling' },
+			{ id: 2, title: 'Feel Good Productivity', author: 'Ali Abdaal' }
+		];
+
+		const readingList = document.getElementById('reading-list');
+
+		let readBooks = [];
+		books.forEach(book => {
+			const readBook = `
+				<li>
+					<ul>
+						<li>${book.title}</li>
+						<li>${book.author}</li>
+					</ul>
+				</li>
+			`;
+
+			readBooks.push(readBook);
+		});
+		readingList.insertAdjacentHTML('beforeend', readBooks.join(''));
+	</script>
+</body>
+
+</html>
