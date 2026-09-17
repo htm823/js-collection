@@ -18,10 +18,15 @@
 		<div class="container-xl w-10/12 mx-auto my-10">
 			<form id="add-book">
 				<label for="title" class="block mt-3">Title</label>
-				<input id="title" name="title" class="border rounded-sm  block" type="text">
+				<input id="title" name="title" class="border rounded-sm block" type="text">
 				<label for="author" class="block mt-3">Author</label>
 				<input id="author" name="author" class="border rounded-sm block" type="text">
 				<button id="add-btn" class="block mt-5 cursor-pointer">Add New Book</button>
+			</form>
+			<form id="search-book">
+				<label for="search-box" class="mt-5 block">Search</label>
+				<input id="search-box" name="search" type="text" class="border rounded-sm block">
+				<button id="search-btn" class="mt-5 block">Search</button>
 			</form>
 			<ul id="reading-list" class="my-7">
 				<!-- Read books -->
@@ -41,7 +46,8 @@
 
 		const books = [
 			{ title: 'Harry Potter', author: 'J. K. Rolling' },
-			{ title: 'Feel Good Productivity', author: 'Ali Abdaal' }
+			{ title: 'Feel Good Productivity', author: 'Ali Abdaal' },
+			{ title: 'Deep Work', author: 'Cal Newport' }
 		];
 
 		const readingList = document.getElementById('reading-list');
@@ -65,7 +71,8 @@
 		const form = document.getElementById('add-book');
 		const title = document.getElementById('title');
 		const author = document.getElementById('author');
-
+		const searchBook = document.getElementById('search-book');
+		const searchBox = document.getElementById('search-box');
 
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
@@ -86,6 +93,40 @@
 			readBooks = [];
 
 			books.forEach(book => {
+				const readBook = `
+				<li>
+					<ul>
+						<li>${book.title}</li>
+						<li>${book.author}</li>
+					</ul>
+				</li>
+			`;
+
+				readBooks.push(readBook);
+			});
+
+			readingList.innerHTML = '';
+
+			readingList.insertAdjacentHTML('beforeend', readBooks.join(''));
+
+			form.reset();
+		});
+
+		searchBook.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const keyword = searchBox.value.trim();
+			if (keyword === '') return;
+
+			// Partial Match & case-insensitive
+			const results = books.filter(book => {
+				const regex = new RegExp(keyword, 'i');
+				return regex.test(book.title) || regex.test(book.author);
+			});
+
+			readBooks = [];
+
+			results.forEach(book => {
 				const readBook = `
 				<li>
 					<ul>
